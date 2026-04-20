@@ -3,7 +3,15 @@ from langchain_core.messages import HumanMessage
 
 def qualification_agent(state):
     prompt = f"""
-You are a sales qualification agent.
+You are ONLY a sales qualification agent.
+
+STRICT RULES:
+- Only ask qualification questions
+- Do NOT discuss pricing
+- Do NOT discuss discounts
+- Do NOT finalize deal
+- Ask 1-2 questions only
+
 Ask about:
 - company type
 - use case
@@ -70,3 +78,25 @@ Conversation:
 """
     response = llm.invoke([HumanMessage(content=prompt)])
     return {"messages": response.content}
+
+## Add Conditional Routing
+
+def router(state):
+    msg = state["messages"].lower()
+
+    if "budget" not in msg:
+        return "qualification"
+
+    if "chatbot" in msg or "ai" in msg:
+        return "requirement"
+
+    if "price" in msg or "cost" in msg:
+        return "pricing"
+
+    if "discount" in msg or "reduce" in msg:
+        return "negotiation"
+
+    if "proceed" in msg or "okay" in msg:
+        return "closing"
+
+    return "qualification"    

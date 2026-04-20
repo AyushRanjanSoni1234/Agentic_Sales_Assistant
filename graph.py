@@ -15,7 +15,18 @@ workflow.add_node("closing", closing_agent)
 
 workflow.set_entry_point("qualification")
 
-workflow.add_edge("qualification", "requirement")
+workflow.add_conditional_edges(
+    "qualification",
+    router,
+    {
+        "qualification": "qualification",
+        "requirement": "requirement",
+        "pricing": "pricing",
+        "negotiation": "negotiation",
+        "closing": "closing"
+    }
+)
+
 workflow.add_edge("requirement", "pricing")
 workflow.add_edge("pricing", "negotiation")
 workflow.add_edge("negotiation", "closing")
