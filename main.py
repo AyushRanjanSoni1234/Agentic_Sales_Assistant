@@ -12,7 +12,7 @@ if user_input:
     st.session_state.chat.append(("user", user_input))
 
     response = requests.post(
-        "http://127.0.0.1:8000/chat",
+        "https://agentic-sales-assistant.onrender.com",
         json={"message": user_input}
     )
 
