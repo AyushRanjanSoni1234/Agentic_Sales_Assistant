@@ -79,24 +79,24 @@ Conversation:
     response = llm.invoke([HumanMessage(content=prompt)])
     return {"messages": response.content}
 
-## Add Conditional Routing
+# ## Add Conditional Routing
 
-def router(state):
-    msg = state["messages"].lower()
+# def router(state):
+#     msg = str(state["messages"]).lower()
 
-    if "budget" not in msg:
-        return "qualification"
+#     if "budget" not in msg:
+#         return "qualification"
 
-    if "chatbot" in msg or "ai" in msg:
-        return "requirement"
+#     if "chatbot" in msg or "ai" in msg:
+#         return "requirement"
 
-    if "price" in msg or "cost" in msg:
-        return "pricing"
+#     if "price" in msg or "cost" in msg:
+#         return "pricing"
 
-    if "discount" in msg or "reduce" in msg:
-        return "negotiation"
+#     if "discount" in msg or "reduce" in msg:
+#         return "negotiation"
 
-    if "proceed" in msg or "okay" in msg:
-        return "closing"
+#     if "proceed" in msg or "okay" in msg:
+#         return "closing"
 
-    return "qualification"    
+#     return "qualification"    

@@ -13,10 +13,15 @@ if user_input:
 
     response = requests.post(
         "https://agentic-sales-assistant.onrender.com/chat",
+        # "http://127.0.0.1:8000/chat",
         json={"message": user_input}
     )
 
-    reply = response.json()["response"]
+    try:
+        data = response.json()
+        reply = data.get("response", "No response")
+    except:
+        reply = response.text
     st.session_state.chat.append(("agent", reply))
 
 for role, msg in st.session_state.chat:
